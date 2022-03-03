@@ -1,24 +1,26 @@
-# t
+How to reprodeuce:
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
+```bash
+yarn run build
 ```
 
-### Compiles and minifies for production
-```
-yarn build
+I think the error exists in theme-chalk/src/input.scss
+
+SCSS varaibles in calc() function shoud be inside "#{}"
+
+```scss
+$input-padding-size-with-extra-icon: calc(
+  5px + map.get($input-font-size, $size) + map.get($input-padding-horizontal, $size)
+);
 ```
 
-### Lints and fixes files
-```
-yarn lint
-```
+This should be
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```scss
+$input-padding-size-with-extra-icon: calc(
+  5px + #{map.get($input-font-size, $size)} + #{map.get(
+      $input-padding-horizontal,
+      $size
+    )}
+);
+```
